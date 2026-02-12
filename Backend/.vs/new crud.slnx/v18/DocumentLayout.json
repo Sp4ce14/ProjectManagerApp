@@ -1,0 +1,165 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\controllers\\crudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\controllers\\crudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\dtos\\projectdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\dtos\\projectdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\models\\taskmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\models\\taskmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\models\\projectmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\models\\projectmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\models\\clientmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\models\\clientmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\dtos\\clientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\dtos\\clientdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\dtos\\taskdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\dtos\\taskdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|c:\\users\\ahmedwaqas\\source\\repos\\new crud\\new crud\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB128898-F6F0-43C2-92E9-4BEB45C6DD06}|new crud\\new crud.csproj|solutionrelative:new crud\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TaskModel.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\TaskModel.cs",
+              "RelativeDocumentMoniker": "new crud\\Models\\TaskModel.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\TaskModel.cs",
+              "RelativeToolTip": "new crud\\Models\\TaskModel.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwBAAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T11:22:56.092Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProjectModel.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\ProjectModel.cs",
+              "RelativeDocumentMoniker": "new crud\\Models\\ProjectModel.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\ProjectModel.cs",
+              "RelativeToolTip": "new crud\\Models\\ProjectModel.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T11:22:34.097Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TaskDTO.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\TaskDTO.cs",
+              "RelativeDocumentMoniker": "new crud\\DTOs\\TaskDTO.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\TaskDTO.cs",
+              "RelativeToolTip": "new crud\\DTOs\\TaskDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T10:46:46.964Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProjectDTO.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\ProjectDTO.cs",
+              "RelativeDocumentMoniker": "new crud\\DTOs\\ProjectDTO.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\ProjectDTO.cs",
+              "RelativeToolTip": "new crud\\DTOs\\ProjectDTO.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T10:46:29.14Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ClientDTO.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\ClientDTO.cs",
+              "RelativeDocumentMoniker": "new crud\\DTOs\\ClientDTO.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\DTOs\\ClientDTO.cs",
+              "RelativeToolTip": "new crud\\DTOs\\ClientDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T10:46:11.653Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClientModel.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\ClientModel.cs",
+              "RelativeDocumentMoniker": "new crud\\Models\\ClientModel.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Models\\ClientModel.cs",
+              "RelativeToolTip": "new crud\\Models\\ClientModel.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T10:45:13.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CRUDController.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Controllers\\CRUDController.cs",
+              "RelativeDocumentMoniker": "new crud\\Controllers\\CRUDController.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Controllers\\CRUDController.cs",
+              "RelativeToolTip": "new crud\\Controllers\\CRUDController.cs",
+              "ViewState": "AgIAANMAAAAAAAAAAAAwwLkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T11:17:32.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "new crud\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "new crud\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T11:33:21.681Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Program.cs",
+              "RelativeDocumentMoniker": "new crud\\Program.cs",
+              "ToolTip": "C:\\Users\\AhmedWaqas\\source\\repos\\new crud\\new crud\\Program.cs",
+              "RelativeToolTip": "new crud\\Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAswCIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T11:32:35.064Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
