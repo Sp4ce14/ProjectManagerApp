@@ -41,6 +41,46 @@ namespace new_crud.Controllers
             return Ok(projects);
         }
 
+        [HttpGet("Filter")]
+        public async Task<IActionResult> GetFilteredProjects([FromQuery] long? clientId, [FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] bool? status)
+        {
+            var query = _context.Projects.AsQueryable();
+            if (clientId != null)
+            {
+                query = query.Where(p => p.ClientId == clientId);
+            }
+            if (from != null)
+            {
+                query = query.Where(p => p.Deadline >= from);
+            }
+            if (to != null)
+            {
+                query = query.Where(p => p.Deadline <= to);
+            }
+            if (status.HasValue)
+            {
+                query = query.Where(p => p.Status == status);
+            }
+            var projects = await query.Select(p => new ProjectDTO
+            {
+                Name = p.Name,
+                Id = p.Id,
+                Status = p.Status,
+                ClientName = p.Client.Name,
+                ClientId = p.Client.Id,
+                Deadline = p.Deadline,
+                Tasks = p.Tasks.Select(t => new TaskDTO
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    AssignedUser = t.AssignedUser,
+                    DueDate = t.DueDate,
+                    IsCompleted = t.IsCompleted,
+                }).ToList()
+            }).ToListAsync();
+            return Ok(projects);
+        }
+
         [HttpGet("Clients")]
         public async Task<IActionResult> GetClients()
         {

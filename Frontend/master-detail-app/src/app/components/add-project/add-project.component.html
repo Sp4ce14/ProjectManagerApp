@@ -43,7 +43,7 @@
                       <i class="bi" [ngClass]="isClientSectionOpen ? 'bi-dash-lg' : 'bi-plus-lg'"></i>
                     </button>
                   </div>
-                  <select id="client" formControlName="clientId" class="form-select"
+                  <select id="client" formControlName="clientId" class="form-select dropdown-toggle"
                     [class.is-invalid]="isFieldInvalid('client')">
                     <option value="">Select a client</option>
                     <ng-container *ngFor="let client of clients">

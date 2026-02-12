@@ -1,8 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ClientModel, ProjectModel } from '../models/project.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class ProjectService {
     return this.http.get<ProjectModel[]>(this.apiUrl + "/Projects").pipe(
       catchError(this.handleError)
     );
+  }
+
+  getFilteredProjects(params: HttpParams): Observable<ProjectModel[]> {
+    return this.http.get<ProjectModel[]>(this.apiUrl + "/Filter", { params }).pipe(
+      catchError(this.handleError)
+    )
   }
 
   getImage(url: any): Observable<File> {
