@@ -1,0 +1,242 @@
+<div class="container-fluid mt-5 mb-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+      <div *ngIf="isLoading" class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="bi bi-hourglass-split"></i> Loading project details...
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
+      </div>
+
+      <div class="card shadow-lg" *ngIf="!isLoading">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">
+            <i class="bi bi-pencil-square"></i> Edit Project
+          </h2>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="projectForm" novalidate>
+            <!-- Project Name -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-4">
+                  <label for="name" class="form-label">
+                    Project Name
+                    <span class="text-danger fw-bold">*</span>
+                  </label>
+                  <input type="text" id="name" formControlName="name" class="form-control form-control-lg"
+                    [class.is-invalid]="isFieldInvalid('name')" placeholder="Enter project name" />
+                  <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+                    <i class="bi bi-exclamation-circle"></i> Project name is required (min. 3 characters)
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- Client with Toggle Button -->
+                <div class="form-group mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label for="client" class="form-label mb-0">
+                      Client
+                      <span class="text-danger fw-bold">*</span>
+                    </label>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-circle"
+                      (click)="toggleClientSection()" title="Add new client"
+                      style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                      <i class="bi" [ngClass]="isClientSectionOpen ? 'bi-dash-lg' : 'bi-plus-lg'"></i>
+                    </button>
+                  </div>
+                  <select id="client" formControlName="clientId" class="form-select"
+                    [class.is-invalid]="isFieldInvalid('clientId')">
+                    <option *ngFor="let client of clients" [value]="client.id">{{client.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="isFieldInvalid('clientId')">
+                    <i class="bi bi-exclamation-circle"></i> Client is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Collapsible Client Section -->
+            <div *ngIf="isClientSectionOpen" class="card mb-4 border-info">
+              <div class="card-body p-3">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="newClientName" class="form-label">Client Name</label>
+                    <input formControlName="clientName" type="text" id="newClientName" class="form-control"
+                      placeholder="Enter client name" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="newClientEmail" class="form-label">Client Email</label>
+                    <input formControlName="clientEmail" type="email" id="newClientEmail" class="form-control"
+                      placeholder="Enter client email" />
+                  </div>
+                </div>
+                <div class="text-end">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="addNewClient()">
+                    <i class="bi bi-plus-circle"></i> Add Client
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deadline and Status -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-4">
+                  <label for="deadline" class="form-label">
+                    Project Deadline
+                    <span class="text-danger fw-bold">*</span>
+                  </label>
+                  <input type="date" id="deadline" formControlName="deadline" class="form-control form-control-lg"
+                    [class.is-invalid]="isFieldInvalid('deadline')" />
+                  <div class="invalid-feedback" *ngIf="isFieldInvalid('deadline')">
+                    <i class="bi bi-exclamation-circle"></i> Deadline is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-4">
+                  <div class="form-check mt-4">
+                    <input type="checkbox" id="status" formControlName="status"
+                      class="form-check-input form-check-input-lg" />
+                    <label for="status" class="form-check-label ms-2">
+                      <strong>Mark as Active</strong>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Add an Image</label>
+              <input class="form-control" type="file" id="formFile" formControlName="image" required [class.is-invalid]="isFieldInvalid('image')" (change)="OnFileChange($event)">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('image')">
+                    <i class="bi bi-exclamation-circle"></i> An image is required
+                  </div>
+            </div>
+            <hr class="my-4" />
+
+            <!-- Tasks Section -->
+            <div class="card mt-4 border-info">
+              <div
+                class="card-header bg-info text-white d-flex justify-content-between align-items-center cursor-pointer"
+                (click)="toggleTasksSection()" role="button" tabindex="0">
+                <h5 class="mb-0">
+                  <i class="bi bi-checklist-2"></i> Project Tasks
+                </h5>
+                <i class="bi" [ngClass]="isTasksSectionOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              </div>
+              <div class="card-body p-4" *ngIf="isTasksSectionOpen">
+                <!-- Task Input Form -->
+                <div class="row mb-4">
+                  <div class="col-md-4">
+                    <label for="taskTitle" class="form-label">Task Title</label>
+                    <input type="text" id="taskTitle" formControlName="taskTitle" class="form-control"
+                      placeholder="Enter task title" />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="taskAssignedUser" class="form-label">Assigned User</label>
+                    <input type="text" id="taskAssignedUser" formControlName="taskAssignedUser" class="form-control"
+                      placeholder="Enter assigned user" />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="taskDueDate" class="form-label">Due Date</label>
+                    <input type="date" id="taskDueDate" formControlName="taskDueDate" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="form-check">
+                      <input type="checkbox" id="taskIsCompleted" formControlName="taskIsCompleted"
+                        class="form-check-input" />
+                      <label for="taskIsCompleted" class="form-check-label">
+                        Mark as Completed
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <button type="button" class="btn btn-success btn-sm" (click)="addTask()" *ngIf="!editPressed">
+                      <i class="bi bi-plus"></i> Add Task
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="updateTask()" *ngIf="editPressed">
+                      <i class="bi bi-pencil"></i> Update Task
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="resetTaskForm()"
+                      *ngIf="editPressed">
+                      <i class="bi bi-x"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tasks Table -->
+                <div class="table-responsive" *ngIf="tempTasks.length > 0">
+                  <table class="table table-hover table-sm">
+                    <thead class="table-light">
+                      <tr>
+                        <th><i class="bi bi-check-lg"></i> Task</th>
+                        <th><i class="bi bi-person"></i> Assigned User</th>
+                        <th><i class="bi bi-calendar"></i> Due Date</th>
+                        <th><i class="bi bi-info-circle"></i> Status</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let task of tempTasks"
+                        [ngClass]="{ 'table-success': task.isCompleted }">
+                        <td>
+                          <span [ngClass]="{ 'text-decoration-line-through text-muted': task.isCompleted }"
+                            class="text-break">
+                            {{ task.title }}
+                          </span>
+                        </td>
+                        <td>{{ task.assignedUser }}</td>
+                        <td>{{ task.dueDate | date: 'MMM dd, yyyy' }}</td>
+                        <td>
+                          <button type="button" class="btn btn-sm"
+                            [ngClass]="task.isCompleted ? 'btn-success' : 'btn-warning'"
+                             title="Toggle task status" [disabled]="isSubmitting">
+                            <i class="bi"
+                              [ngClass]="task.isCompleted ? 'bi-check-circle-fill' : 'bi-clock-history'"></i>
+                            {{ task.isCompleted ? 'Completed' : 'Pending' }}
+                          </button>
+                        </td>
+                        <td class="text-center">
+                          <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-primary" (click)="preLoadTask(task.id)"
+                              title="Edit task">
+                              <i class="bi bi-pencil"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" (click)="removeTask(task.id)" [disabled]="editPressed"
+                              title="Delete task">
+                              <i class="bi bi-trash"></i> Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div *ngIf="tempTasks.length === 0" class="alert alert-info mb-0">
+                  <i class="bi bi-info-circle"></i> No tasks added yet. Add one above!
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- Form Actions -->
+            <div class="d-flex gap-2 justify-content-end">
+              <button type="button" class="btn btn-primary btn-lg" (click)="updateProject()" [disabled]="isSubmitting">
+                <i class="bi bi-check-circle"></i> Update Project
+              </button>
+              <button type="button" class="btn btn-secondary btn-lg" (click)="cancel()" [disabled]="isSubmitting">
+                <i class="bi bi-x-circle"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

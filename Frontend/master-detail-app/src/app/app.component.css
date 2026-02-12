@@ -1,0 +1,14 @@
+.navbar {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
+main {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 56px);
+}
