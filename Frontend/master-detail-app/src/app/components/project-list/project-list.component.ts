@@ -4,6 +4,7 @@ import { ProjectService } from '../../services/project.service';
 import { ClientModel, ProjectModel, TaskModel } from '../../models/project.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  projects: ProjectModel[] = [];
+  fetchedProjects: ProjectModel[] = [];
+  displayProjects: ProjectModel[] = [];
   expandedProjectId: number | null = null;
   isLoading: boolean = false;
   errorMessage: string = '';
@@ -26,8 +28,9 @@ export class ProjectListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadProjects();
     this.initializeForm();
+    this.loadProjects();
+    this.search();
   }
 
   applyFilter(): void {
@@ -36,10 +39,16 @@ export class ProjectListComponent implements OnInit {
     if (this.filterForm.get('from')?.value) queryParams = queryParams.set('from', this.filterForm.get('from')?.value);       // string in YYYY-MM-DD format
     if (this.filterForm.get('to')?.value) queryParams = queryParams.set('to', this.filterForm.get('to')?.value);             // string in YYYY-MM-DD format
     if (this.filterForm.get('status')?.value) queryParams = queryParams.set('status', this.filterForm.get('status')?.value);         // convert boolean to string
-    
+
     this.projectService.getFilteredProjects(queryParams).subscribe({
       next: projects => {
-        this.projects = projects;
+        this.fetchedProjects = projects;
+        const query = this.filterForm.get('search')?.value?.toLowerCase() || '';
+        this.displayProjects = query
+          ? this.fetchedProjects.filter(p =>
+            p.name.toLowerCase().includes(query) ||
+            p.clientName?.toLowerCase().includes(query)
+          ) : [...this.fetchedProjects]
       },
       error: () => {
         this.errorMessage = "Failed to apply Filter";
@@ -49,7 +58,8 @@ export class ProjectListComponent implements OnInit {
 
   initializeForm(): void {
     this.filterForm = this.formBuilder.group({
-      clientId: [null],
+      search: [null],
+      clientId: [''],
       to: [null],
       from: [null],
       status: [null]
@@ -69,13 +79,31 @@ export class ProjectListComponent implements OnInit {
   }
 
   loadProjects(): void {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const fromDate = new Date(today);
+    fromDate.setDate(1);
+
+    const toDate = new Date(year, month + 1, 0);
+
+    const from = fromDate.toLocaleDateString('en-CA');
+    const to = toDate.toLocaleDateString('en-CA');
+
+    this.filterForm.patchValue({
+      from: from,
+      to: to
+    })
+    let queryParams = new HttpParams();
+    if (this.filterForm.get('from')?.value) queryParams = queryParams.set('from', this.filterForm.get('from')?.value);       // string in YYYY-MM-DD format
+    if (this.filterForm.get('to')?.value) queryParams = queryParams.set('to', this.filterForm.get('to')?.value);             // string in YYYY-MM-DD format
     this.isLoading = true;
     this.errorMessage = '';
-    this.projectService.getProjects().subscribe({
+    this.projectService.getFilteredProjects(queryParams).subscribe({
       next: (data) => {
-        this.projects = data;
+        this.fetchedProjects = data;
+        this.displayProjects = this.fetchedProjects;
         this.loadClients();
-
         this.isLoading = false;
       },
       error: (error) => {
@@ -124,5 +152,21 @@ export class ProjectListComponent implements OnInit {
 
   viewProject(projectId: number | undefined): void {
     this.router.navigate(['/projects/view', projectId])
+  }
+
+  search(): void {
+    this.filterForm.get('search')?.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(input => {
+        const query = input?.toLowerCase() || '';
+        this.displayProjects = query
+          ? this.fetchedProjects.filter(p =>
+            p.name.toLowerCase().includes(query) ||
+            p.clientName?.toLowerCase().includes(query)
+           ) : [...this.fetchedProjects]
+      });
   }
 }
