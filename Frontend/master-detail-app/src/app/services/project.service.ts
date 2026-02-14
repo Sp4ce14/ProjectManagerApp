@@ -2,7 +2,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ClientModel, ProjectModel } from '../models/project.model';
+import { ClientModel, GetResponseModel, ProjectModel } from '../models/project.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class ProjectService {
     );
   }
 
-  getFilteredProjects(params: HttpParams): Observable<ProjectModel[]> {
-    return this.http.get<ProjectModel[]>(this.apiUrl + "/Filter", { params }).pipe(
+  getFilteredProjects(params: HttpParams): Observable<GetResponseModel> {
+    return this.http.get<GetResponseModel>(this.apiUrl + "/Filter", { params }).pipe(
       catchError(this.handleError)
     )
   }

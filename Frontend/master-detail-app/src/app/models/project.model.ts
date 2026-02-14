@@ -17,6 +17,11 @@ export interface ProjectModel {
   tasks?: TaskModel[];
 }
 
+export interface GetResponseModel {
+  totalFoundRecords: number,
+  projects: ProjectModel[] 
+}
+
 export interface ClientModel {
   id?: number;
   name?: string;

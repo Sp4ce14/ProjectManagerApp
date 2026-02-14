@@ -5,18 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/CRUD/Projects": {
-      "get": {
-        "tags": [
-          "CRUD"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/CRUD/Filter": {
       "get": {
         "tags": [
@@ -24,7 +12,7 @@
         ],
         "parameters": [
           {
-            "name": "clientId",
+            "name": "ClientId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -32,7 +20,7 @@
             }
           },
           {
-            "name": "from",
+            "name": "From",
             "in": "query",
             "schema": {
               "type": "string",
@@ -40,7 +28,7 @@
             }
           },
           {
-            "name": "to",
+            "name": "To",
             "in": "query",
             "schema": {
               "type": "string",
@@ -48,10 +36,35 @@
             }
           },
           {
-            "name": "status",
+            "name": "Status",
             "in": "query",
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "name": "SearchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CurrentPage",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],

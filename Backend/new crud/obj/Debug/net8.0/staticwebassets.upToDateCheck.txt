@@ -15,3 +15,7 @@ wwwroot\images\d75a1092-62ac-4ddf-b4f4-ff49499fa116.jpg
 wwwroot\images\f03a7564-c484-4dc9-b185-77753e0ab258.jpg
 wwwroot\images\fa6243c2-7b79-4e96-877c-ef00ba2dd324.jpg
 wwwroot\images\fc2883af-87d1-4ed8-ab50-2b1b3a4af1c8.jpg
+wwwroot\images\b7cfdc6c-129e-4b2d-b1e6-ae375ae98b70.jpg
+wwwroot\images\7fba9e1d-1e1b-40ce-8f04-85e1a049e5d7.jpg
+wwwroot\images\c0fb167e-26b7-4cdb-bba5-3f68dd59fdb5.jpg
+wwwroot\images\a4f340e6-f02b-473f-9f58-61c0a11e87d2.jpg

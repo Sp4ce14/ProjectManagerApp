@@ -13,13 +13,17 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  fetchedProjects: ProjectModel[] = [];
-  displayProjects: ProjectModel[] = [];
+  projects: ProjectModel[] = [];
   expandedProjectId: number | null = null;
   isLoading: boolean = false;
   errorMessage: string = '';
   clients: ClientModel[] = [];
   filterForm!: FormGroup;
+  currentPage = 1;
+  pageSize = 10;
+  totalPages!: number;
+  firstLoad = true;
+  searchString: any;
 
   constructor(
     private projectService: ProjectService,
@@ -29,31 +33,9 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.isLoading = true;
     this.loadProjects();
-    this.search();
-  }
-
-  applyFilter(): void {
-    let queryParams = new HttpParams();
-    if (this.filterForm.get('clientId')?.value) queryParams = queryParams.set('clientId', this.filterForm.get('clientId')?.value);
-    if (this.filterForm.get('from')?.value) queryParams = queryParams.set('from', this.filterForm.get('from')?.value);       // string in YYYY-MM-DD format
-    if (this.filterForm.get('to')?.value) queryParams = queryParams.set('to', this.filterForm.get('to')?.value);             // string in YYYY-MM-DD format
-    if (this.filterForm.get('status')?.value) queryParams = queryParams.set('status', this.filterForm.get('status')?.value);         // convert boolean to string
-
-    this.projectService.getFilteredProjects(queryParams).subscribe({
-      next: projects => {
-        this.fetchedProjects = projects;
-        const query = this.filterForm.get('search')?.value?.toLowerCase() || '';
-        this.displayProjects = query
-          ? this.fetchedProjects.filter(p =>
-            p.name.toLowerCase().includes(query) ||
-            p.clientName?.toLowerCase().includes(query)
-          ) : [...this.fetchedProjects]
-      },
-      error: () => {
-        this.errorMessage = "Failed to apply Filter";
-      }
-    })
+    this.enableSearch();
   }
 
   initializeForm(): void {
@@ -78,33 +60,47 @@ export class ProjectListComponent implements OnInit {
     })
   }
 
+  input(): void {
+    this.currentPage = 1;
+    this.loadProjects();
+  }
+
   loadProjects(): void {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const fromDate = new Date(today);
-    fromDate.setDate(1);
+    if (this.firstLoad) {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const fromDate = new Date(today);
+      fromDate.setDate(1);
 
-    const toDate = new Date(year, month + 1, 0);
+      const toDate = new Date(year, month + 1, 0);
 
-    const from = fromDate.toLocaleDateString('en-CA');
-    const to = toDate.toLocaleDateString('en-CA');
+      const from = fromDate.toLocaleDateString('en-CA');
+      const to = toDate.toLocaleDateString('en-CA');
 
-    this.filterForm.patchValue({
-      from: from,
-      to: to
-    })
+      this.filterForm.patchValue({
+        from: from,
+        to: to
+      })
+      this.firstLoad = false;
+    }
     let queryParams = new HttpParams();
+    if (this.filterForm.get('clientId')?.value) queryParams = queryParams.set('clientId', this.filterForm.get('clientId')?.value);
     if (this.filterForm.get('from')?.value) queryParams = queryParams.set('from', this.filterForm.get('from')?.value);       // string in YYYY-MM-DD format
     if (this.filterForm.get('to')?.value) queryParams = queryParams.set('to', this.filterForm.get('to')?.value);             // string in YYYY-MM-DD format
-    this.isLoading = true;
+    if (this.filterForm.get('status')?.value) queryParams = queryParams.set('status', this.filterForm.get('status')?.value);
+    if (this.searchString) queryParams = queryParams.set('searchTerm', this.searchString);       // convert boolean to string
+    queryParams = queryParams.set('currentPage', this.currentPage);
+    queryParams = queryParams.set('pageSize', this.pageSize);         // string in YYYY-MM-DD format
+    
     this.errorMessage = '';
     this.projectService.getFilteredProjects(queryParams).subscribe({
       next: (data) => {
-        this.fetchedProjects = data;
-        this.displayProjects = this.fetchedProjects;
+        this.projects = data.projects;
+        console.log(data);
         this.loadClients();
         this.isLoading = false;
+        this.totalPages = Math.ceil(data.totalFoundRecords / this.pageSize)
       },
       error: (error) => {
         this.isLoading = false;
@@ -112,6 +108,12 @@ export class ProjectListComponent implements OnInit {
         console.error('Error loading projects:', error);
       }
     });
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadProjects();
   }
 
   toggleProjectDetails(projectId: number | undefined): void {
@@ -154,19 +156,16 @@ export class ProjectListComponent implements OnInit {
     this.router.navigate(['/projects/view', projectId])
   }
 
-  search(): void {
-    this.filterForm.get('search')?.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe(input => {
-        const query = input?.toLowerCase() || '';
-        this.displayProjects = query
-          ? this.fetchedProjects.filter(p =>
-            p.name.toLowerCase().includes(query) ||
-            p.clientName?.toLowerCase().includes(query)
-           ) : [...this.fetchedProjects]
-      });
+  enableSearch(): void {
+    this.filterForm.get('search')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(value => {
+      this.searchString = value;
+      this.currentPage = 1;
+      this.loadProjects();
+    })
   }
 }
+
+

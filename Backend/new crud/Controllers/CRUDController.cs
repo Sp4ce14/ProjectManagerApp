@@ -18,50 +18,23 @@ namespace new_crud.Controllers
             _context = context;
         }
 
-        [HttpGet("Projects")]
-        public async Task<IActionResult> GetProjects()
-        {
-            var projects = await _context.Projects.AsNoTracking().Select(p => new ProjectDTO
-            {
-                Name = p.Name,
-                Id = p.Id,
-                Status = p.Status,
-                ClientName = p.Client.Name,
-                ClientId = p.Client.Id,
-                Deadline = p.Deadline,
-                Tasks = p.Tasks.Select(t => new TaskDTO
-                {
-                    Id = t.Id,
-                    Title = t.Title,
-                    AssignedUser = t.AssignedUser,
-                    DueDate = t.DueDate,
-                    IsCompleted = t.IsCompleted,
-                }).ToList()
-            }).ToListAsync();
-            return Ok(projects);
-        }
-
         [HttpGet("Filter")]
-        public async Task<IActionResult> GetFilteredProjects([FromQuery] long? clientId, [FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] bool? status)
+        public async Task<IActionResult> GetFilteredProjects([FromQuery] FilterPagDto filters)
         {
-            var query = _context.Projects.AsQueryable();
-            if (clientId != null)
+            if (!ModelState.IsValid)
             {
-                query = query.Where(p => p.ClientId == clientId);
+                return BadRequest("One of the validation errors occured");
             }
-            if (from != null)
-            {
-                query = query.Where(p => p.Deadline >= from);
-            }
-            if (to != null)
-            {
-                query = query.Where(p => p.Deadline <= to);
-            }
-            if (status.HasValue)
-            {
-                query = query.Where(p => p.Status == status);
-            }
-            var projects = await query.Select(p => new ProjectDTO
+            var query = _context.Projects.AsQueryable().AsNoTracking();
+            if (filters.ClientId != null) query = query.Where(p => p.ClientId == filters.ClientId);
+            if (filters.From != null) query = query.Where(p => p.Deadline >= filters.From);
+            if (filters.To != null) query = query.Where(p => p.Deadline <= filters.To);
+            if (filters.Status.HasValue) query = query.Where(p => p.Status == filters.Status);
+            if (!String.IsNullOrEmpty(filters.SearchTerm)) query = query.Where(p => p.Name.ToLower().Contains(filters.SearchTerm.ToLower()) || p.Client.Name.ToLower().Contains(filters.SearchTerm.ToLower()));
+            var totalCount = await query.CountAsync();
+            var offset = (filters.CurrentPage - 1) * filters.PageSize;
+            query = query.OrderBy(p => p.Id).Skip(offset).Take(filters.PageSize);
+            List<ProjectDTO> projects = await query.Select(p => new ProjectDTO
             {
                 Name = p.Name,
                 Id = p.Id,
@@ -78,7 +51,12 @@ namespace new_crud.Controllers
                     IsCompleted = t.IsCompleted,
                 }).ToList()
             }).ToListAsync();
-            return Ok(projects);
+            GetResponseDto responseObj = new()
+            {
+                TotalFoundRecords = totalCount,
+                Projects = projects
+            };
+            return Ok(responseObj);
         }
 
         [HttpGet("Clients")]
